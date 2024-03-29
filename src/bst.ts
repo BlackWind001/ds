@@ -9,11 +9,13 @@ class BSTNode {
   value: number;
   left: BSTNode | null;
   right: BSTNode | null;
+  level: number;
 
   constructor (value: number) {
     this.value = value;
     this.left = null;
     this.right = null;
+    this.level = -1;
   }
 
   insert (value: number) {
@@ -24,6 +26,7 @@ class BSTNode {
       this[directionToInsert]!.insert(value);
     } else {
       this[directionToInsert] = new BSTNode(value);
+      this[directionToInsert]!.level = this.level + 1;
     }
   }
 
@@ -87,7 +90,18 @@ class BSTNode {
     else {
       if (searchNodeDirection === null) {
         // Current node is the node to be deleted
-        const [parentOfReplaceNode, replaceNodeDirection] = this._getXMostNode('left') || this._getXMostNode('right');
+        const [leftMostNode, leftMostNodeDirection] = this._getXMostNode('left');
+        const [rightMostNode, rightMostNodeDirection] = this._getXMostNode('right');
+        let parentOfReplaceNode, replaceNodeDirection;
+
+        if (leftMostNode) {
+          parentOfReplaceNode = leftMostNode;
+          replaceNodeDirection = leftMostNodeDirection;
+        }
+        else {
+          parentOfReplaceNode = rightMostNode;
+          replaceNodeDirection = rightMostNodeDirection;
+        }
 
         if (parentOfReplaceNode === null) {
           // Current node is leaf node.
@@ -100,6 +114,7 @@ class BSTNode {
 
           parentOfReplaceNode[replaceNodeDirection] = null;
 
+          replaceNode.level = this.level;
           replaceNode.left = this.left;
           replaceNode.right = this.right;
 
@@ -115,7 +130,18 @@ class BSTNode {
         // If right child of searched node is null, delete directly.
         // If right subtree of searched node is not null, search leftmost node.
         // Remove leftmost node from its parent and put it in currently searched node's position.
-        const [parentOfReplaceNode, replaceNodeDirection] = searchNode._getXMostNode('left') || searchNode._getXMostNode('right');
+        const [leftMostNode, leftMostNodeDirection] = searchNode._getXMostNode('left');
+        const [rightMostNode, rightMostNodeDirection] = searchNode._getXMostNode('right');
+        let parentOfReplaceNode, replaceNodeDirection;
+
+        if (leftMostNode) {
+          parentOfReplaceNode = leftMostNode;
+          replaceNodeDirection = leftMostNodeDirection;
+        }
+        else {
+          parentOfReplaceNode = rightMostNode;
+          replaceNodeDirection = rightMostNodeDirection;
+        }
 
         if (parentOfReplaceNode === null) {
           // Searched node is leaf node. Replace searched node with null.
@@ -126,6 +152,7 @@ class BSTNode {
 
           parentOfReplaceNode[replaceNodeDirection] = null;
 
+          replaceNode.level = searchNode.level;
           replaceNode.left = searchNode.left;
           replaceNode.right = searchNode.right;
 
@@ -157,6 +184,7 @@ class BST {
 
     if (this.root === null) {
       this.root = new BSTNode(value);
+      this.root.level = 0;
       return;
     }
 

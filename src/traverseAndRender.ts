@@ -38,6 +38,7 @@ export default function traverseAndRender (node: BSTNode_Type | null, x: number,
     rightArrow.linewidth = 4;
   }
 
+  circle.className = `level_${node.level}`;
   circle.noStroke();
   circle.fill = CIRCLE_FILL_COLOR;
   text.fill = TEXT_COLOR;

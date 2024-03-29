@@ -21,6 +21,7 @@ function App() {
       node && order.push(node.value);
     });
     console.log(order.join(','));
+    console.log(operations);
 
     two.clear();
     traverseAndRender(BST.root, rootX, rootY);
@@ -50,6 +51,10 @@ function App() {
 
     deleteButtonRef.current.addEventListener('keydown', (e) => {
       if (!inputRef.current) {
+        return;
+      }
+
+      if (e.key !== 'Tab') {
         return;
       }
 
@@ -83,6 +88,8 @@ function App() {
     // This is why, we need to return a new array every time
     setOperations([...BST.operations]);
     setInputString('');
+
+    inputRef.current?.focus();
   };
   const handleDelete: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (!inputString) {
@@ -102,6 +109,8 @@ function App() {
     // https://react.dev/reference/react/useEffect#parameters
     setOperations([...BST.operations]);
     setInputString('');
+
+    inputRef.current?.focus();
   };
   const handleRandomInsert: React.MouseEventHandler<HTMLButtonElement> = () => {
     const inputElem = randomInsertInputRef.current;

@@ -1,11 +1,11 @@
-import React from "react";
-import "./App.css";
-import BST, { Operation_Type } from "./bst";
-import two from "./two";
+import React from 'react';
+import './App.css';
+import BST, { Operation_Type } from './bst';
+import two from './two';
 
 function App() {
   const treeCanvasRef = React.useRef(null);
-  const [inputString, setInputString] = React.useState<string>("");
+  const [inputString, setInputString] = React.useState<string>('');
   const [operations, setOperations] = React.useState<Operation_Type[]>([]);
 
   React.useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
     if (treeCanvasRef.current) {
       two.appendTo(treeCanvasRef.current);
     } else {
-      console.error("Fatal error. Ref was not initialized.");
+      console.error('Fatal error. Ref was not initialized.');
     }
   }, []);
 
@@ -49,7 +49,7 @@ function App() {
     // useEffects fire when the Object.is comparison is false.
     // This is why, we need to return a new array every time
     setOperations([...BST.operations]);
-    setInputString("");
+    setInputString('');
   };
   const handleDelete: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (!inputString) {
@@ -68,21 +68,21 @@ function App() {
     // why we are creating a new array every time.
     // https://react.dev/reference/react/useEffect#parameters
     setOperations([...BST.operations]);
-    setInputString("");
+    setInputString('');
   };
 
   return (
     <>
-      <section className="controls">
-        <div className="control-input">
+      <section className='controls'>
+        <div className='control-input'>
           <input value={inputString} onChange={handleChange} />
         </div>
-        <div className="control-buttons">
+        <div className='control-buttons'>
           <button onClick={handleInsert}>Insert</button>
           <button onClick={handleDelete}>Delete</button>
         </div>
       </section>
-      <section className="tree-canvas" ref={treeCanvasRef}></section>
+      <section className='tree-canvas' ref={treeCanvasRef}></section>
     </>
   );
 }

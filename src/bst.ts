@@ -1,7 +1,7 @@
-type SearchResult_Type = [BSTNode | null, "left" | "right" | null]
-type XMostSearchResult_Type = [BSTNode | null, "left" | "right"]
+type SearchResult_Type = [BSTNode | null, 'left' | 'right' | null]
+type XMostSearchResult_Type = [BSTNode | null, 'left' | 'right']
 export type Operation_Type = {
-  op: "insert" | "delete",
+  op: 'insert' | 'delete',
   value: number
 }
 
@@ -18,7 +18,7 @@ class BSTNode {
 
   insert (value: number) {
     const isLesser = value < this.value;
-    const directionToInsert = isLesser ? "left" : "right";
+    const directionToInsert = isLesser ? 'left' : 'right';
 
     if (this[directionToInsert] !== null) {
       this[directionToInsert]!.insert(value);
@@ -41,7 +41,7 @@ class BSTNode {
     }
 
     const isLesser = value < this.value;
-    const childToSearch = isLesser ? "left" : "right";
+    const childToSearch = isLesser ? 'left' : 'right';
     
     if (this[childToSearch]?.value === value) {
       // Value found in left or right child.
@@ -57,7 +57,7 @@ class BSTNode {
     }
   }
 
-  _getXMostNode (x: "left" | "right"): XMostSearchResult_Type {
+  _getXMostNode (x: 'left' | 'right'): XMostSearchResult_Type {
     let current = this[x];
     if (current === null) {
       // Current node is x-most node.
@@ -87,7 +87,7 @@ class BSTNode {
     else {
       if (searchNodeDirection === null) {
         // Current node is the node to be deleted
-        const [parentOfReplaceNode, replaceNodeDirection] = this._getXMostNode("left") || this._getXMostNode("right");
+        const [parentOfReplaceNode, replaceNodeDirection] = this._getXMostNode('left') || this._getXMostNode('right');
 
         if (parentOfReplaceNode === null) {
           // Current node is leaf node.
@@ -115,7 +115,7 @@ class BSTNode {
         // If right child of searched node is null, delete directly.
         // If right subtree of searched node is not null, search leftmost node.
         // Remove leftmost node from its parent and put it in currently searched node's position.
-        const [parentOfReplaceNode, replaceNodeDirection] = searchNode._getXMostNode("left") || searchNode._getXMostNode("right");
+        const [parentOfReplaceNode, replaceNodeDirection] = searchNode._getXMostNode('left') || searchNode._getXMostNode('right');
 
         if (parentOfReplaceNode === null) {
           // Searched node is leaf node. Replace searched node with null.
@@ -151,7 +151,7 @@ class BST {
 
   insert (value: number) {
     this.operations.push({
-      op: "insert",
+      op: 'insert',
       value
     });
 
@@ -165,7 +165,7 @@ class BST {
 
   delete (value: number) {
     this.operations.push({
-      op: "delete", value
+      op: 'delete', value
     });
     if (!this.root) {
       return;

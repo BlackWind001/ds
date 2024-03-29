@@ -9,7 +9,11 @@ function App() {
   const [operations, setOperations] = React.useState<Operation_Type[]>([]);
 
   React.useEffect(() => {
-    console.log(two.width);
+    const order: number[] = [];
+    BST.traverse(BST.root, (node) => {
+      node && order.push(node.value);
+    });
+    console.log(order);
   }, [operations]);
 
   React.useEffect(() => {

@@ -150,22 +150,24 @@ class BST {
   }
 
   insert (value: number) {
-    if (this.root === null) {
-      this.root = new BSTNode(value);
-    }
-
-    this.root.insert(value);
     this.operations.push({
       op: "insert",
       value
     });
+
+    if (this.root === null) {
+      this.root = new BSTNode(value);
+      return;
+    }
+
+    this.root.insert(value);
   }
 
   delete (value: number) {
+    this.operations.push({
+      op: "delete", value
+    });
     if (!this.root) {
-      this.operations.push({
-        op: "delete", value
-      });
       return;
     }
 
@@ -179,12 +181,20 @@ class BST {
     else if (status !== null && status !== true && status instanceof BSTNode) {
       this.root = status;
     }
+  }
 
-    this.operations.push({
-      op: "delete", value
-    });
+  traverse (node: BSTNode | null, opCallback: (arg: BSTNode | null) => unknown) {
+    if (!node) {
+      return;
+    }
+
+    opCallback(node);
+
+    this.traverse(node!.left, opCallback);
+    this.traverse(node!.right, opCallback);
   }
 }
 
 export default new BST();
+export type BSTNode_Type = InstanceType<typeof BSTNode>;
 

@@ -15,6 +15,12 @@ function App() {
   React.useEffect(() => {
     const rootX = two.width / 2;
     const rootY = 40;
+    const order: number[] = [];
+
+    BST.traverse((node) => {
+      node && order.push(node.value);
+    });
+    console.log(order.join(','));
 
     two.clear();
     traverseAndRender(BST.root, rootX, rootY);
@@ -114,6 +120,10 @@ function App() {
 
     setOperations([...BST.operations]);
   };
+  const handleClearAll: React.MouseEventHandler<HTMLButtonElement> = () => {
+    BST.root = null;
+    setOperations([]);
+  };
 
   return (
     <>
@@ -133,6 +143,9 @@ function App() {
           Insert <input placeholder='0' ref={randomInsertInputRef} /> random
           numbers <button onClick={handleRandomInsert}>Insert</button>
         </span>
+        <div className='clear-all-button-wrapper'>
+          <button onClick={handleClearAll}>Clear all</button>
+        </div>
       </section>
       <section className='tree-canvas' ref={treeCanvasRef}></section>
     </>

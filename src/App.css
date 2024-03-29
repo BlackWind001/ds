@@ -43,6 +43,15 @@
   justify-content: center;
 }
 
+.other-controls-container > *:not(:last-child) {
+  padding-right: 1rem;
+  border-right: 1px solid #4f81c7;
+}
+
+.other-controls-container > *:not(:first-child) {
+  padding-left: 1rem;
+}
+
 .random-numbers-inserter {
   display: flex;
   gap: 1rem;
@@ -63,6 +72,11 @@
   height: 1.5rem;
   font-size: 1rem;
   padding: 0 0.5rem;
+  background-color: #4f81c7;
+  color: #fcfafa;
+}
+
+.clear-all-button-wrapper > button {
   background-color: #4f81c7;
   color: #fcfafa;
 }

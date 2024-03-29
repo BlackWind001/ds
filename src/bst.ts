@@ -183,15 +183,22 @@ class BST {
     }
   }
 
-  traverse (node: BSTNode | null, opCallback: (arg: BSTNode | null) => unknown) {
+  /**
+   * ToDo: Use loop instead of recursion.
+   */
+  _traverse (node: BSTNode | null, opCallback: (arg: BSTNode | null) => unknown) {
     if (!node) {
       return;
     }
 
     opCallback(node);
 
-    this.traverse(node!.left, opCallback);
-    this.traverse(node!.right, opCallback);
+    this._traverse(node!.left, opCallback);
+    this._traverse(node!.right, opCallback);
+  }
+
+  traverse (opCallback: (arg: BSTNode | null) => unknown) {
+    this._traverse(this.root, opCallback);
   }
 }
 

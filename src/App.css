@@ -1,6 +1,7 @@
 #root {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
@@ -8,21 +9,21 @@
   text-align: center;
 }
 
-.controls {
+.main-controls {
   margin: 0 auto;
   min-width: 200px;
-  width: 50%;
+  width: 60%;
 }
 
-.controls > :not(:last-child) {
+.main-controls > :not(:last-child) {
   margin-bottom: 1rem;
 }
 
 .control-input > input {
   width: 100%;
-  height: 2rem;
+  height: 3rem;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -34,4 +35,34 @@
   width: auto;
   height: auto;
   flex: 1;
+}
+
+.other-controls-container {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.random-numbers-inserter {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.random-numbers-inserter > input {
+  height: 1.5rem;
+  background-color: #4f81c7;
+  color: #fcfafa;
+  text-align: center;
+}
+.random-numbers-inserter > input::placeholder {
+  color: #fcfafa;
+}
+
+.random-numbers-inserter > button {
+  height: 1.5rem;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  background-color: #4f81c7;
+  color: #fcfafa;
 }

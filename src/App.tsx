@@ -2,7 +2,10 @@ import React from 'react';
 import './App.css';
 import BST, { Operation_Type } from './bst';
 import two from './two';
-import traverseAndRender from './traverseAndRender';
+import traverseAndRender, {
+  CoordinateLimit_Type,
+  NODE_RADIUS,
+} from './traverseAndRender';
 
 function App() {
   const inputRef = React.useRef<null | HTMLInputElement>(null);
@@ -13,18 +16,30 @@ function App() {
   const [operations, setOperations] = React.useState<Operation_Type[]>([]);
 
   React.useEffect(() => {
-    const rootX = two.width / 2;
-    const rootY = 40;
-    const order: number[] = [];
+    const rootXLimits: CoordinateLimit_Type = { start: 0, end: 0 };
+    const rootY = 0 + NODE_RADIUS;
+    const midPoint = two.width / 2;
+    let maxLevel = -1,
+      maxWidth = 0,
+      heightOfTree = -1,
+      noOfNodesInLastLevel = -1;
 
+    // Traverse tree and calculate max width of the last level.
     BST.traverse((node) => {
-      node && order.push(node.value);
+      if (node && node.level > maxLevel) {
+        maxLevel = node.level;
+      }
     });
-    console.log(order.join(','));
-    console.log(operations);
+
+    heightOfTree = maxLevel + 1;
+    noOfNodesInLastLevel = Math.pow(2, heightOfTree - 1);
+    maxWidth = (2 * noOfNodesInLastLevel - 1) * NODE_RADIUS;
+
+    rootXLimits.start = midPoint - maxWidth / 2;
+    rootXLimits.end = midPoint + maxWidth / 2;
 
     two.clear();
-    traverseAndRender(BST.root, rootX, rootY);
+    traverseAndRender(BST.root, rootXLimits, rootY);
     two.render();
   }, [operations]);
 

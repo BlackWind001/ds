@@ -1,48 +1,58 @@
 import { BSTNode_Type } from './bst';
 import two from './two';
 
-const NODE_RADIUS = 30;
+export type CoordinateLimit_Type = {
+  start: number;
+  end: number
+};
+
+export const NODE_RADIUS = 40;
 const CIRCLE_FILL_COLOR = '#64C4ED';
 const ARROW_FILL_COLOR = '#FCFAFA';
 const TEXT_COLOR = '#FCFAFA';
 
-export default function traverseAndRender (node: BSTNode_Type | null, x: number, y: number) {
+export default function traverseAndRender (node: BSTNode_Type | null, xLimits: CoordinateLimit_Type, y: number) {
   if (!node || Number.isNaN(node.value)) {
     return;
   }
 
-  let lineStartX, lineStartY, lineEndX, lineEndY;
-  let leftArrow, rightArrow;
+  const currentX = (xLimits.start + xLimits.end) / 2;
+  const leftChildXLimits: CoordinateLimit_Type = { start: xLimits.start, end: currentX };
+  const rightChildXLimits: CoordinateLimit_Type = { start: currentX, end: xLimits.end };
+  const childY = y + (3 * NODE_RADIUS);
 
-  const circle = two.makeCircle(x, y, NODE_RADIUS);
-  const text = two.makeText('' + node.value, x, y);
-
-  if (node.left) {
-    lineStartX = x - NODE_RADIUS;
-    lineStartY = y;
-    lineEndX = x - NODE_RADIUS * 2;
-    lineEndY = y + NODE_RADIUS * 2;
-
-    leftArrow = two.makeArrow(lineStartX, lineStartY, lineEndX, lineEndY, 10);
-    leftArrow.stroke = ARROW_FILL_COLOR;
-    leftArrow.linewidth = 4;
-  }
-  if (node.right) {
-    lineStartX = x + NODE_RADIUS;
-    lineStartY = y;
-    lineEndX = x + NODE_RADIUS * 2;
-    lineEndY = y + NODE_RADIUS * 2;
-
-    rightArrow = two.makeArrow(lineStartX, lineStartY, lineEndX, lineEndY, 10);
-    rightArrow.stroke = ARROW_FILL_COLOR;
-    rightArrow.linewidth = 4;
-  }
+  const circle = two.makeCircle(currentX, y, NODE_RADIUS);
+  const text = two.makeText('' + node.value, currentX, y);
 
   circle.className = `level_${node.level}`;
   circle.noStroke();
   circle.fill = CIRCLE_FILL_COLOR;
   text.fill = TEXT_COLOR;
 
-  traverseAndRender(node.left, x - NODE_RADIUS * 2, y + NODE_RADIUS * 2);
-  traverseAndRender(node.right, x + NODE_RADIUS * 2, y + NODE_RADIUS * 2);
+  if (node.left) {
+    const leftLine = two.makeLine(
+      currentX - (NODE_RADIUS),
+      y,
+      (leftChildXLimits.start + leftChildXLimits.end) / 2,
+      childY - NODE_RADIUS
+    );
+
+    leftLine.stroke = ARROW_FILL_COLOR;
+    leftLine.linewidth = 4;
+
+    traverseAndRender(node.left, leftChildXLimits, childY);
+  }
+  if (node.right) {
+    const rightLine = two.makeLine(
+      currentX + (NODE_RADIUS),
+      y,
+      (rightChildXLimits.start + rightChildXLimits.end) / 2,
+      childY - NODE_RADIUS
+    );
+
+    rightLine.stroke = ARROW_FILL_COLOR;
+    rightLine.linewidth = 4;
+
+    traverseAndRender(node.right, rightChildXLimits, childY);
+  }
 }

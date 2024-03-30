@@ -5,11 +5,11 @@
   gap: 0.5rem;
   padding: 2rem;
   text-align: center;
+  max-width: 100%;
 }
 
 .main-controls {
   margin: 0 auto;
-  min-width: 200px;
   width: 60%;
 }
 
@@ -39,6 +39,7 @@
   font-size: 1.5rem;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .other-controls-container > *:not(:last-child) {
@@ -54,6 +55,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .random-numbers-inserter > input {
